@@ -1,0 +1,40 @@
+@page "/servers"
+@rendermode InteractiveServer
+<style>
+    .Buttons{display: flex;
+    justify-content: space-around;}
+</style>
+<h3>Servers</h3>
+<br/>
+<br/>
+
+<div class="Buttons">
+@foreach(var c in cities)
+{
+    <div class="card" style="">
+  <img src="@($"/images/{c}.png")" class="card-img-top" alt="...">
+  <div class="card-body">
+  <button class="btn btn-primary" @onclick="()=>City(c)">@c</button>
+  </div>
+</div>
+    
+}
+</div>
+<div>
+    <ul>
+@foreach(var s in servers){
+<li>@s.Name in @s.City is <span style="color:@(s.IsOnline?"green":"red");">@(s.IsOnline?"online":"offline")</span> <a href="/servers/@s.Id">Edit</a></li>
+}
+    </ul>
+</div>
+
+@code {
+
+    private List<string> cities = CityRepository.GetCity();
+    private List<Server> servers = new List<Server>();
+
+    private void City(string city)
+    {
+        servers = ServersRepository.GetServersByCity(city);
+    }
+}
