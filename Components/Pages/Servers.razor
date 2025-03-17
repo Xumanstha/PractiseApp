@@ -48,7 +48,7 @@
         if(Id>0)
         {
             ServersRepository.DeleteServer(Id);
-        NavigationManager.NavigateTo("/servers");
+         NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
         }
     }
 }
